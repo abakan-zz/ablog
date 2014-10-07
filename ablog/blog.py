@@ -172,6 +172,26 @@ class Blog(object):
                                       self.config['fontawesome_link_cdn'] or
                                       self.config['fontawesome_css_file'])
 
+        # add our Blog instance to the application so we can find it
+        # when coming from the application
+        self.app.ablog = self
+
+        # prepare a dictionary with translators for the blog languages
+        self.translators = {}
+        if self.app:
+           # construct locale_dirs in the same way Sphinx does
+           from sphinx import package_dir, locale
+           if self.app.config.language is not None:
+              locale_dirs = ([None, os.path.join(package_dir, 'locale')] +
+                             [os.path.join(self.app.srcdir, x) for x in \
+                              self.app.config.locale_dirs])
+           else:
+              locale_dirs = []
+           for language in self.app.config.blog_languages.keys():
+              translator, has_translation = locale.init(locale_dirs, language)
+              self.translators[language] = translator if has_translation else None
+
+
     def __getattr__(self, name):
 
         try:

@@ -532,3 +532,28 @@ def register_posts(app):
     for docname, posts in getattr(app.env, 'ablog_posts', {}).items():
         for postinfo in posts:
             blog.register(docname, postinfo)
+
+
+# Hook processing. Triggered by:
+#    self.app.emit('html-page-context', pagename, templatename, ctx, event_arg)
+# As call with arguments:
+#    app, pagename, templatename, ctx, event_arg
+#
+def html_page_context(app, docname, templatename, ctx, *args, **kwargs):
+    htmllang = app.config.blog_default_language
+    postinfo = app.env.ablog_posts.get(docname)
+
+    # is it a post?
+    if postinfo:
+        languages = postinfo[0].get('language')
+        if languages:
+            htmllang = languages[0]
+
+    # query the documents metadata otherwise
+    else:
+        htmllang = app.env.metadata.get(docname, {}).get('language', htmllang)
+
+    ctx['htmllang'] = htmllang
+    translator = app.ablog.translators.get(htmllang)
+    if translator:
+        ctx['gettext'] = translator.gettext
