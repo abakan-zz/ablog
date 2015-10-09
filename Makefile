@@ -23,4 +23,4 @@ test: mako
 	mkdir -p test; cd test; printf "ablog\nABlog\nABlog Team\nhttp://ablog.readthedocs.org" | ablog start; cd ablog; ablog build
 
 mako:
-	export TEMPLATE=MAKO; cd docs; ablog build -T -a
+	export TEMPLATE=mako; cd docs; ablog build -T -a

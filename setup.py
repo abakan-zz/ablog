@@ -39,6 +39,7 @@ setup(
     package_dir={'ablog': 'ablog'},
     package_data={'ablog': [
         'templates/*.html',
+        'templates/*.mako',
         'locale/sphinx.pot',
         'locale/*/LC_MESSAGES/sphinx.*o']},
     license='MIT License',

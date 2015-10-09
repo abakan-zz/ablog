@@ -9,7 +9,7 @@ import ablog
 ablog_builder = 'dirhtml'
 ablog_website = '_website'
 
-MAKO = os.environ.get("TEMPLATE") == "MAKO"
+MAKO = os.environ.get("TEMPLATE", "").lower() == "mako"
 THEME = 'zzzeeksphinx' if MAKO else 'alabaster'
 
 extensions = [
