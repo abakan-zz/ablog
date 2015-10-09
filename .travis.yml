@@ -4,7 +4,7 @@ python:
   - 2.7
   - 3.4
 before_install:
-  - pip install Sphinx Werkzeug alabaster invoke
+  - pip install Sphinx Werkzeug alabaster invoke mako zzzeeksphinx
 install:
   - pip install .
 script:

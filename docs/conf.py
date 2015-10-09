@@ -9,6 +9,9 @@ import ablog
 ablog_builder = 'dirhtml'
 ablog_website = '_website'
 
+MAKO = os.environ.get("TEMPLATE") == "MAKO"
+THEME = 'zzzeeksphinx' if MAKO else 'alabaster'
+
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
@@ -18,7 +21,7 @@ extensions = [
     'sphinx.ext.extlinks',
     #'IPython.sphinxext.ipython_directive',
     #'IPython.sphinxext.ipython_console_highlighting',
-    'alabaster',
+    THEME,
     'ablog'
 ]
 
@@ -75,24 +78,28 @@ fontawesome_css_file = 'css/font-awesome.css'
 # post_auto_excerpt = 1
 
 # THEME
-
-html_style = 'alabaster.css'
-html_theme = 'alabaster'
-html_sidebars = {
-   '**': ['about.html',
-          'postcard.html', 'recentposts.html',
-          'tagcloud.html', 'categories.html',
-          'archives.html',
-          'searchbox.html']
-}
-html_theme_path = [alabaster.get_path()]
-html_theme_options = {
-    'travis_button': True,
-    'github_user': 'abakan',
-    'github_repo': 'ablog',
-    'description': 'ABlog for blogging with Sphinx',
-    'logo': 'ablog.png',
-}
+html_theme = THEME
+if MAKO:
+    html_sidebars = {
+       '**': ['tagcloud.mako']
+    }
+else:
+    html_sidebars = {
+       '**': ['about.html',
+              'postcard.html', 'recentposts.html',
+              'tagcloud.html', 'categories.html',
+              'archives.html',
+              'searchbox.html']
+    }
+    html_style = 'alabaster.css'
+    html_theme_path = [alabaster.get_path()]
+    html_theme_options = {
+        'travis_button': True,
+        'github_user': 'abakan',
+        'github_repo': 'ablog',
+        'description': 'ABlog for blogging with Sphinx',
+        'logo': 'ablog.png',
+    }
 
 # SPHINX
 
