@@ -42,7 +42,7 @@
   {% if post.tags %}
   <li>{% if post.tags|length > 1 %}{% if fa %}<i class="fa-fw fa fa-tags"></i>{% else %}{{ gettext('Tags') }}:{% endif %}
       {% else %}{% if fa %}<i class="fa-fw fa fa-tag"></i>{% else %}{{ gettext('Tag') }}:{% endif %}{% endif %}
-    {% for coll in post.tags %}
+    {% for coll in post.tags|sort %}
       {% if coll|length %}
       <a href="{{ pathto(coll.docname) }}">{{ coll }}</a>{% if loop.index < post.tags|length %},{% endif %}
       {% else %}{{ coll }}{% if loop.index < post.tags|length %},{% endif %}{% endif %}
